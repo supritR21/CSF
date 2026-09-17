@@ -1,0 +1,33 @@
+https://daminibansal.medium.com/understanding-database-locks-a346150b2614
+
+-> Database concurrency is essential to managing multiple transactions that access the same data simultaneously.
+
+-> when multiple transactions attempt to modify the same data concurrently, this can lead to data corruption, inconsistencies, and unpredictable results. To prevent such issues, databases implement locking mechanisms. Locks ensure that only one transaction can modify a piece of data at a time, while other transactions must wait their turn.
+
+--> Shared Lock:
+* Definition: A shared lock allows multiple transactions to read the same data simultaneously, but it prevents any transaction from modifying the data until all shared locks are released.
+* Use Case: Shared locks are often used when multiple transactions need to read the same data without modifying it. For example, when retrieving customer information, several transactions can safely read the same data at once but cannot update it until the lock is released.
+
+--> Exclusive Lock:
+* Definition: An exclusive lock prevents other transactions from reading or modifying the data. It is used when a transaction intends to modify the data and needs exclusive access.
+* Use Case: Exclusive locks are needed when a transaction is updating, inserting, or deleting data. It ensures that no other transaction can interfere with the operation and guarantees the integrity of the data.
+
+-> FOR UPDATE:
+* Definition: The FOR UPDATE clause is used in SQL queries to place an exclusive lock on the selected rows. This ensures that no other transaction can modify the rows until the transaction that issued the FOR UPDATE command completes.
+* Use Case: FOR UPDATE is useful in situations where you want to ensure that the rows retrieved are locked for modification. For example, when processing orders, you might want to lock the order rows to prevent other transactions from processing the same orders at the same time.
+
+-> SKIP LOCKED:
+* Definition: The SKIP LOCKED option allows a transaction to skip over locked rows. When a row is locked by another transaction, instead of waiting for the lock to be released, the query simply skips the locked rows and processes the unlocked ones.
+* Use Case: This is particularly useful in high-concurrency environments where waiting for locks could significantly degrade performance. For example, when processing a queue of jobs, you can use SKIP LOCKED to quickly find and process jobs that are not locked by other workers, rather than waiting for a lock to be released. 
+* This query will return all “pending” orders that are not locked and will skip any orders that are currently being processed by other transactions.
+
+-> NO WAIT:
+* Definition: The NO WAIT option causes a transaction to fail immediately if a lock cannot be obtained. If the row is locked by another transaction, the current transaction will not wait and will instead return an error.
+* Use Case: NO WAIT is useful when a transaction needs to act quickly and cannot afford to be delayed. This is particularly helpful in systems where time-sensitive operations are crucial, such as real-time trading systems or high-throughput applications.
+
+
+Why Do We Need These Locks?
+* Data Integrity, * Consistency, * Reduced Deadlocks
+
+Benefits of Locking Mechanisms:
+* Concurrency Control, * Optimized Resource Utilization, * Avoidance of Deadlocks, * Granular Locking

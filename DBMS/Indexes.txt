@@ -1,0 +1,9 @@
+-> Data is typically stored on storage devices in fixed-size units called pages or blocks. These units can range in size from a few kilobytes to several megabytes (PostgreSQL default is 8k), depending on the storage system and configuration.
+
+-> Indexes are essential for improving query performance in a database.
+
+-> 2 Main types of index:
+1. Clustered Index(Primary key), 2. Non Clustered Index(or Secondary Index)
+
+-> Common Data Structure that are used to build indexes:
+1. B+ Tree Indexes, 2. Hash Indexes, 3. Bitmap Indexes, 4. Sparse Indexes

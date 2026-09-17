@@ -1,0 +1,44 @@
+https://medium.com/@aryadyas/understanding-database-transactions-how-they-work-and-where-they-matter-a00a65a94c14
+https://nadermedhatthoughts.medium.com/understanding-database-isolation-levels-c4ebcd55c6b9
+
+-> At the heart of every reliable database is the concept of a transaction.
+-> Transactions keep data organized, accurate, and consistent.
+-> Think of a database transaction like a promise that a series of changes will either all happen or none will.
+
+-> ACID Properties of Transactions: Atomicity, Consistency, Isolation, Durability
+
+-> How Do Transactions Work
+* Begin Transaction: The transaction starts.
+* Execute Operations: All the actions within the transaction (like updates, inserts, or deletions) happen.
+* Commit Transaction: If everything goes smoothly, the transaction commits, making the changes permanent.
+* Rollback Transaction: If something goes wrong, the transaction rolls back, undoing any changes.
+
+BEGIN TRANSACTION, COMMIT, ROLLBACK
+
+-> Handling Multiple Transactions at Once:
+* Read Uncommitted: Allows one transaction to see changes from another before they’re committed (this is faster but can lead to “dirty reads”).
+* Read Committed: Only committed changes are visible, which avoids dirty reads.
+* Repeatable Read: Ensures that if you read data multiple times within a transaction, it won’t change.
+* Serializable: The strictest level, where transactions are completely isolated, but it’s slower.
+The right isolation level depends on your specific needs, balancing data accuracy with speed.
+
+-> Benefits of Using Transactions:
+* Data Consistency and Integrity
+* Error Recovery
+* Concurrency Control
+* Simplified Code
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+-> Phantom Reads
+A transaction re-executes a query returning a set of rows that satisfy a search condition and finds that the set of rows satisfying the condition has changed due to another recently-committed transaction.
+
+-> Write Skew
+Two concurrent transactions each determine what they are writing based on reading a data set that overlaps what the other is writing.
+
+
+--> four isolation levels have been defined:
+* Read Uncommitted
+* Read Committed
+* Repeatable Read
+* Serializable
+

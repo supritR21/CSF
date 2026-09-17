@@ -1,0 +1,34 @@
+https://nadermedhatthoughts.medium.com/understanding-database-isolation-levels-c4ebcd55c6b9
+
+-> Database isolation defines the degree to which a transaction must be isolated from the data modifications made by any other transaction(even though in reality there can be a large number of concurrently running transactions). The overarching goal is to prevent reads and writes of temporary, aborted, or otherwise incorrect data written by concurrent transactions.
+
+-> Dirty Reads:
+* A transaction reads data written by a concurrent uncommitted transaction. (uncommitted data is called “dirty.”)
+
+-> Non-Repeatable Reads, and Read Skew:
+* A transaction re-reads data it has previously read and finds that data has been modified by another transaction (that has been committed since the initial read).
+
+-> Phantom Reads
+* A transaction re-executes a query returning a set of rows that satisfy a search condition and finds that the set of rows satisfying the condition has changed due to another recently-committed transaction.
+
+-> Write Skew:
+* Two concurrent transactions each determine what they are writing based on reading a data set that overlaps what the other is writing.
+
+
+
+---> Based on these phenomena, These four isolation levels have been defined:
+
+-> Read Uncommitted:
+* Read Uncommitted is the lowest isolation level. At this level, makes sure no transaction can update a database row if another transaction has already updated it and not committed. This protects against lost updates, but won’t stand in a way of dirty reads
+
+-> Read Committed:
+* This isolation level does not allow any other transaction to write or read a row to which another transaction has written to but not yet committed. Thus it does not allows dirty read. The transaction holds a read or write lock on the current row, and thus prevents other transactions from reading, updating, or deleting it.
+
+-> Repeatable Read:
+* This isolation level makes sure any transaction that reads data from a row blocks any other writing transactions from accessing the same row. This is the most restrictive isolation level that holds read locks on all rows it references and writes locks on all rows it inserts, updates, or deletes. Since other transactions cannot read, update or delete these rows, consequently it avoids non-repeatable read.
+
+-> Serializable:
+* This isolation level is the highest isolation level. serializable isolation level requires a lot more than restricting access to a single row. Typically this isolation mode would lock the whole table, to prevent any other transactions from inserting or reading data from it.
+
+-> Snapshot Isolation:
+* This isolation level can greatly increase concurrency at a lower cost than transactional isolation. When data is modified, the committed versions of affected rows are copied to temp and given version numbers. This operation is called copy on write and is used for all inserts, updates, and deletes using this technique. When another session reads the same data, the committed version of the data as of the time the reading transaction began is returned.
